@@ -22,59 +22,59 @@ def all_part_file(filepath):
     fichier.close()
     return f
 
-# Fonction de lecture de la première moitié d'un fichier
-def first_part_file(filepath):
-    fichier = codecs.open(filepath, encoding='utf-8')
-    f = fichier.readlines()
-    nbline = len(f)
-    mid = int(nbline/2)
-    firstpart = f[:mid]
-    fichier.close()
-    return firstpart
+# Fonction de lecture de la première moitié d'un fichier (utilisé pour une version antérieur du programme)
+# def first_part_file(filepath):
+#     fichier = codecs.open(filepath, encoding='utf-8')
+#     f = fichier.readlines()
+#     nbline = len(f)
+#     mid = int(nbline/2)
+#     firstpart = f[:mid]
+#     fichier.close()
+#     return firstpart
 
-# Fonction de lecture de la seconde partie d'un fichier
-def last_part_file(filepath):
-    fichier = codecs.open(filepath, encoding='utf-8')
-    f = fichier.readlines()
-    nbline = len(f)
-    mid = int(nbline/2)
-    lastpart = f[mid:]
-    fichier.close()
-    return lastpart
+# Fonction de lecture de la seconde partie d'un fichier (utilisé pour une version antérieur du programme)
+# def last_part_file(filepath):
+#     fichier = codecs.open(filepath, encoding='utf-8')
+#     f = fichier.readlines()
+#     nbline = len(f)
+#     mid = int(nbline/2)
+#     lastpart = f[mid:]
+#     fichier.close()
+#     return lastpart
 
 # Fonction de de prétraitement récupérant tous les mots
 def return_token(text):
     aux = []
     for sentence in text:
-        doc = nlp(sentence)
+        doc = nlp(sentence) # Traitement d'une phrase avec spacy
         for X in doc:
-            aux.append(X.text)
+            aux.append(X.text) # On ajoute chaque mots de la phrase dans le tableau
     return aux
 
 # Fonction de de prétraitement récupérant tous les noms
 def return_nouns(text):
     aux = []
     for sentence in text:
-        doc = nlp(sentence)
+        doc = nlp(sentence) # Traitement d'une phrase avec spacy
         for chunk in doc.noun_chunks:
-            aux.append(chunk.text)
+            aux.append(chunk.text) # On ajoute chaque noms de la phrase dans le tableau
     return aux
 
 # Fonction de de prétraitement récupérant tous les verbes
 def return_verbs(text):
     aux = []
     for sentence in text:
-        doc = nlp(sentence)
+        doc = nlp(sentence) # Traitement d'une phrase avec spacy
         for token in doc:
             if token.pos_ == "VERB":
-                aux.append(token.lemma_)
+                aux.append(token.lemma_) # On ajoute chaque verbe de la phrase dans le tableau
     return aux
 
 # Fonction pour appliquer une liste de stopwords au texte
 def cleaner(fic, sw_list):
     clean_words = []
     for token in fic:
-        if token not in sw_list:
+        if token not in sw_list: # On compare chaque mots du texte aux mots contenus dans la liste de stopwords
             clean_words.append(token)
     return clean_words
 
@@ -163,17 +163,17 @@ def reader(filepath):
     return content
 
 # Création et génération d'un wordcloud
-def cloud_creator(fp, lp, nbmots, forme_nuage, forme_mots):
+def cloud_creator(fp, lp, nbmots, forme_nuage, forme_mots, name_file1, name_file2):
 
     mask = None
 
     if forme_nuage != "None":
-        mask = np.array(Image.open('WordCloud/'+forme_nuage+'.jpg'))
+        mask = np.array(Image.open('WordCloud/'+forme_nuage+'.jpg')) # Récupération de la forme du nuage choisie
 
     font = None
 
     if forme_mots != "None":
-        font = 'Font/'+forme_mots+'.ttf'
+        font = 'Font/'+forme_mots+'.ttf' # Récupération de la police d'écriture choisie
     
     wc = WordCloud(stopwords = set(stopwords.words('french')),
                 font_path=font,
@@ -182,18 +182,16 @@ def cloud_creator(fp, lp, nbmots, forme_nuage, forme_mots):
                 max_words = nbmots,
                 max_font_size = 1000,
                 random_state = 42)
-                # width = mask.shape[1],
-                # height = mask.shape[0])
     
-    wc.generate(fp)
+    wc.generate(fp) # génération du nuage de mots du premier fichier
     plt.figure(figsize=[10,5])
     plt.subplot(1,2,1)
-    plt.title("Texte 1")
+    plt.title(name_file1)
     plt.imshow(wc, interpolation = "bilinear")
     plt.axis('off')
-    wc.generate(lp)
+    wc.generate(lp) # génération du nuage de mots du second fichier
     plt.subplot(1,2,2)
-    plt.title("Texte 2")
+    plt.title(name_file2)
     plt.imshow(wc, interpolation = "bilinear")
     plt.axis('off')
     plt.show()
