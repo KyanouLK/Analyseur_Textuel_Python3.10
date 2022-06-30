@@ -5,8 +5,8 @@ import concat
 
 # Création de la fenêtre de l'interface graphique
 fenetre = tk.Tk()
-fenetre.geometry("270x110")
-fenetre.title("Concatener")
+fenetre.geometry("280x120")
+fenetre.title("Concaténer")
 
 # Tableau global qui contiendra tous les fichiers à traiter
 tabFiles = []
@@ -21,7 +21,7 @@ def openAllFiles():
 def concatAll():
     try:
         global tabFiles
-        concat.concatenation(tabFiles, nom_sortie.get())
+        concat.concatenation(tabFiles, nom_sortie.get()) # Appel de la fonction concatenation du fichier concat pour assembler les fichiers
         tkinter.messagebox.showinfo(
             'Succès',
             f'La concaténation a bien été réalisé. Vous trouverez le fichier '+nom_sortie.get()+'.txt dans le répertoire Fichier_concat'
@@ -40,6 +40,6 @@ nom_sortie = tk.Entry()
 nom_sortie.insert(0,"Concatenation")
 nom_sortie.grid(row=1, column=1)
 
-tk.Button(text="Concatener", command=concatAll).grid(row=2, column=0)
+tk.Button(text="Concaténer", command=concatAll).grid(row=2, column=0)
 
 fenetre.mainloop()
