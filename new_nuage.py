@@ -10,7 +10,7 @@ from nltk.corpus import stopwords
 # Chargement du module spacy version française
 nlp = spacy.load("fr_core_news_sm")
 
-# nltk.download('stopwords')
+nltk.download('stopwords')
 
 # Initialisation du premier module de stopwords
 stopWords = set(stopwords.words('french'))
