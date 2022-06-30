@@ -3,7 +3,7 @@ import os
 
 # Création de la fenêtre de gestionnaire
 fenetre = tk.Tk()
-fenetre.geometry("250x80")
+fenetre.geometry("260x90")
 fenetre.title("Gestionnaire")
 
 # Fonction affichant la fenêtre pour la concaténation
